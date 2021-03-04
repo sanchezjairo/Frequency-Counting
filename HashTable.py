@@ -20,11 +20,10 @@ class HashTable:
 
   def hash_func(self, key):
     #first letter of the key "lower" will always lowercase letters
-    first_letter = key[0].lower()
+    first_letter = key[0]
+    first_letter_finder = ord(first_letter)
+    index = first_letter_finder % self.size
 
-    distance_from_a = ord(first_letter) - ord('a')
-    #mods so we can be in range
-    index = distance_from_a % self.size
     return index
   
 
@@ -35,17 +34,18 @@ class HashTable:
   def insert(self, key, value):
     #hashes key
     box = self.arr[self.hash_func(key)]
-    # this is used to assign key and value pairs to a tuple
-    new_pair = (key,value)
-    # This checks if thier are any key and value pair duplicates
-    dup_pair_checker = box.find(key)
-    # if duplicate key and value pair exist, append it, then replace the old pair
-    if dup_pair_checker == None:
-      box.append(new_pair)
+    new_value = (key, value)
+    index = box.head
+
+    if index == None:
+      box.append(new_value)
+
+    elif index.data[0] == key:
+      index.data = (key, index.data[1] + value)
+      index = index.next
 
     else:
-      if dup_pair_checker == key:
-        dup_pair_checker = (key, dup_pair_checker + 1)
+      box.append(new_value
 
 
 
@@ -56,16 +56,17 @@ class HashTable:
 
   # Traverse through the every Linked List in the table and print the key value pairs.
 
-  # For example: 
-  # a: 1
-  # again: 1
-  # and: 1
-  # blooms: 1
-  # erase: 2
-
   def print_key_values(self):
     for lst in self.arr:
-      pass
+      box = lst.head
+
+      if box == None:
+        pass
+
+      else:
+        for i in range(lst.length()):
+           print(f'{box.data[0]}: {box.data[1]}')
+           box = box.next
 
 
 
